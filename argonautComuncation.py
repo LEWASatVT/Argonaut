@@ -1,5 +1,5 @@
 # Authors: John Purviance and Debarati Basu
-# Date: 6/3/14
+# Date: 9/11/14
 # LEWAS Lab 
 # Near real time Argonaut SW communication and data logging program.
 
