@@ -95,7 +95,7 @@ def readStart():
 
 ###################################################################
 				cell=Cell(line)
-				sql="INSERT INTO CELL"+str(cell.cellNum)+"(XVelocity, YVelocity, STDerrorX, STDerrorY, Beam1strength, Beam2strength)"%
+				sql="INSERT INTO CELL"+str(cell.cellNum)+"(XVelocity, YVelocity, STDerrorX, STDerrorY, Beam1strength, Beam2strength) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')"%(cell.dataPoints[1], cell.dataPoints[2], cell.dataPoints[3], cell.dataPoints[4], cell.dataPoints[5], cell.dataPoints[6])
 
 
 		# Data parssing error handeling.
