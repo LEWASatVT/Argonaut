@@ -11,6 +11,7 @@ import serial
 import sys 
 import time 
 import datetime
+import MySQLdb
   
 ##########
 # Writes a command to the argonaut (except 'start' or 'exit', see their specific functions).
@@ -189,6 +190,11 @@ with open("test.log", 'a' , buffering=1) as log:
 	argonaut.timeout=2
 	argonaut.sendBreak(800)  
 	
+	##internal local database connection settings
+	db=MySQLdb.coonect("localhost", "root", "mysql", "LEWAS")
+	cursor=db.cursor()
+
+
 	readArgonaut()
 	control()
 
