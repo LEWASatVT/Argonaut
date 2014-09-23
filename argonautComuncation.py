@@ -68,6 +68,13 @@ def control():
 			command=raw_input('\nCommand: ')
 	exit()
 
+
+
+class Cell:
+	def __init__(self, dataLine):
+		self.dataPoints=dataLine.split()
+		self.cellNum=self.dataPoints[0]
+
 ##########
 # Prosses output of Argonaut. Parses average data diffrent from cell data.
 # Writes data to the log file. 
@@ -85,6 +92,11 @@ def readStart():
 				# Parses data for each cell. 
 				log.write('\nCell number: '+line[0:2]+' Velocity X: '+line[3:9]+' Velocity Y: '+line[10:16]+'\n')
 				log.write('Standard error X: '+line[17:20]+' Standard error Y: '+line[21:24]+'\n') 
+
+###################################################################
+				cell=Cell(line)
+				sql="INSERT INTO CELL"+str(cell.cellNum)+"(XVelocity, YVelocity, STDerrorX, STDerrorY, Beam1strength, Beam2strength)"%
+
 
 		# Data parssing error handeling.
 		except Exception as e:
