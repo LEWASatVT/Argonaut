@@ -69,7 +69,7 @@ def control():
 	exit()
 
 
-
+########################################################333
 class Cell:
 	def __init__(self, dataLine):
 		self.dataPoints=dataLine.split()
@@ -90,13 +90,13 @@ def readStart():
 			else:
 
 				# Parses data for each cell. 
-				log.write('\nCell number: '+line[0:2]+' Velocity X: '+line[3:9]+' Velocity Y: '+line[10:16]+'\n')
-				log.write('Standard error X: '+line[17:20]+' Standard error Y: '+line[21:24]+'\n') 
+				#log.write('\nCell number: '+line[0:2]+' Velocity X: '+line[3:9]+' Velocity Y: '+line[10:16]+'\n')
+				#log.write('Standard error X: '+line[17:20]+' Standard error Y: '+line[21:24]+'\n') 
 
 ###################################################################
 				cell=Cell(line)
 				sql="INSERT INTO CELL"+str(cell.cellNum)+"(XVelocity, YVelocity, STDerrorX, STDerrorY, Beam1strength, Beam2strength) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')"%(cell.dataPoints[1], cell.dataPoints[2], cell.dataPoints[3], cell.dataPoints[4], cell.dataPoints[5], cell.dataPoints[6])
-
+#####################################################################
 
 		# Data parssing error handeling.
 		except Exception as e:
