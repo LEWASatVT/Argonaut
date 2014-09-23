@@ -96,6 +96,8 @@ def readStart():
 ###################################################################
 				cell=Cell(line)
 				sql="INSERT INTO CELL"+str(cell.cellNum)+"(XVelocity, YVelocity, STDerrorX, STDerrorY, Beam1strength, Beam2strength) VALUES ('%s', '%s', '%s', '%s', '%s', '%s')"%(cell.dataPoints[1], cell.dataPoints[2], cell.dataPoints[3], cell.dataPoints[4], cell.dataPoints[5], cell.dataPoints[6])
+				cursor.execute(sql)
+				db.commit()
 #####################################################################
 
 		# Data parssing error handeling.
@@ -152,17 +154,34 @@ def exit():
 	log.close()
 	sys.exit("Argonaut Closed")
 
+
+#################################################################
+class Average:
+	def __init__(self, dataLine):
+		self.data=dataLine.split()
+		self.year=self.data[0]
+		self.month=self.data[1]
+		self.day=self.data[2]
+		self.hour=self.data[3]
+		self.min=self.data[4]
+		self.sec=self.data[5]
+		self.begin=self.data[26]
+		sefl.end=self.data[27]
+######################################################################
+
 ##########
 # Parse text data for the minute average.
 # @param data 
 #		type: string
 #		data to be parsed
 def averageDataWrite(data):
-	log.write('\nYear: '+data[0:4]+' Month: '+data[5:7]+' Day: '+data[8:10]+' Hour '+data[11:13]+' Minute: '+data[14:16]+' Second: '+data[17:19]+'\n')
-	log.write('Velocity X: '+data[20:26]+' Velocity Y: '+data[27:33]+' Water Level: '+data[34:40]+'\n')
-	log.write('Standard error x: '+data[41:44]+' Standard error y: '+data[45:48]+' Standard error water level: '+data[49:52]+'\n')
-	log.write('Heading: '+data[69:73]+' Pitch: '+data[74:77]+ ' Roll: '+data[78:81]+'\n')
-	log.write('Mean Temperature: '+data[94:100]+' Input voltage: '+data[118:121]+' Starting water depth: '+data[122:125]+' Ending water depth: '+data[126:130]+'\n')
+	#log.write('\nYear: '+data[0:4]+' Month: '+data[5:7]+' Day: '+data[8:10]+' Hour '+data[11:13]+' Minute: '+data[14:16]+' Second: '+data[17:19]+'\n')
+	#log.write('Velocity X: '+data[20:26]+' Velocity Y: '+data[27:33]+' Water Level: '+data[34:40]+'\n')
+	#log.write('Standard error x: '+data[41:44]+' Standard error y: '+data[45:48]+' Standard error water level: '+data[49:52]+'\n')
+	#log.write('Heading: '+data[69:73]+' Pitch: '+data[74:77]+ ' Roll: '+data[78:81]+'\n')
+	#log.write('Mean Temperature: '+data[94:100]+' Input voltage: '+data[118:121]+' Starting water depth: '+data[122:125]+' Ending water depth: '+data[126:130]+'\n')
+
+	#sql="INSERT INTO ArgAVG"
 
 ##########
 # Checks serial transmission echos for succesfull or failed transmissions of commands.
