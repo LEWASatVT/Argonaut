@@ -69,11 +69,19 @@ def control():
 	exit()
 
 
-########################################################333
+########################################################
+
+class Depth:
+	def __init__(self, start, end):
+		self.start=int(start)
+		self.end=int(end)
+
+
 class Cell:
-	def __init__(self, dataLine):
+	def __init__(self, dataLine,good):
 		self.dataPoints=dataLine.split()
 		self.cellNum=self.dataPoints[0]
+		self.underWater=good
 
 ##########
 # Prosses output of Argonaut. Parses average data diffrent from cell data.
@@ -117,7 +125,7 @@ def readBogo():
 
 			# Handels dates for this year and last (data collected last year).
 			if (line[0:4]==str(year)) or (line[0:4]==str(int(year)-1)):
-				averageDataWrite(line)
+				depth=averageDataWrite(line,depth)
 				break
 			else:
 				{
@@ -159,14 +167,8 @@ def exit():
 class Average:
 	def __init__(self, dataLine):
 		self.data=dataLine.split()
-		self.year=self.data[0]
-		self.month=self.data[1]
-		self.day=self.data[2]
-		self.hour=self.data[3]
-		self.min=self.data[4]
-		self.sec=self.data[5]
-		self.begin=self.data[26]
-		sefl.end=self.data[27]
+		self.start=self.data[26]
+		self.end=self.data[27]
 ######################################################################
 
 ##########
@@ -181,7 +183,16 @@ def averageDataWrite(data):
 	#log.write('Heading: '+data[69:73]+' Pitch: '+data[74:77]+ ' Roll: '+data[78:81]+'\n')
 	#log.write('Mean Temperature: '+data[94:100]+' Input voltage: '+data[118:121]+' Starting water depth: '+data[122:125]+' Ending water depth: '+data[126:130]+'\n')
 
-	#sql="INSERT INTO ArgAVG"
+	#avg=Average(data)
+
+	sql="INSERT INTO ArgAVG(velX, velY, depth, errorX, errorY, errorDepth, b1strength, b2strength, percentGoodPing, temp, inputPower, startDepth, endDepth, noiseB1, noiseB2, noiseB3) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s','%s')"%(avg.data[6], avg.data[7],avg.data[8],avg.data[9],avg.data[10],avg.data[12],avg.data[13],avg.data[15],avg.data[22],avg.data[25], avg.data[26],avg.data[27],avg.data[28],avg.data[29],avg.data[30])
+
+	#return depth(avg.start,avg.end)
+
+#####################################################
+
+
+
 
 ##########
 # Checks serial transmission echos for succesfull or failed transmissions of commands.
@@ -225,6 +236,7 @@ with open("test.log", 'a' , buffering=1) as log:
 	db=MySQLdb.coonect("localhost", "root", "mysql", "LEWAS")
 	cursor=db.cursor()
 
+	depth=Depth(0,0)
 
 	readArgonaut()
 	control()
